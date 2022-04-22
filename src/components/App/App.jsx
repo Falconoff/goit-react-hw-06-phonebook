@@ -1,4 +1,6 @@
-import { useState, useEffect } from 'react';
+// import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from 'nanoid';
 import toast, { Toaster } from 'react-hot-toast';
 
@@ -6,17 +8,49 @@ import Form from '../Form';
 import Contacts from '../Contacts';
 import Filter from '../Filter';
 
+// import {
+//   setContactsAction,
+//   delContactAction,
+//   filterAction,
+// } from '../../redux/store';
+
+import { setContactsAction, delContactAction } from '../../redux/contactsSlice';
+import { filterAction } from '../../redux/filterSlice';
+
 import { Container, TitleMain, TitleSecond } from './App.styled';
 
 // const LS_KEY = 'contacts';
 
 function App() {
+  // =====================================================
   // State. Contacts from localStorage
   // const [contacts, setContacts] = useState(
   //   () => JSON.parse(window.localStorage.getItem(LS_KEY)) ?? []
   // );
-  const [contacts, setContacts] = useState([]);
-  const [filter, setFilter] = useState('');
+
+  // const [contacts, setContacts] = useState([]);
+  // const [filter, setFilter] = useState('');
+  // =====================================================
+
+  // --- REDUX ---
+  const dispatch = useDispatch();
+
+  // console.log(
+  //   'App state.contacts: ',
+  //   useSelector(state => state.contacts.items)
+  // );
+  // console.log(
+  //   'App state.filter: ',
+  //   useSelector(state => state.filter)
+  // );
+
+  const contacts = useSelector(state => state.contacts.items);
+  // console.log('contacts', contacts);
+
+  const filter = useSelector(state => state.contacts.filter);
+  // console.log('filter:', filter);
+
+  // =====================================================
 
   // for filter
   const normalizedFilter = filter.toLowerCase();
@@ -37,16 +71,32 @@ function App() {
     }
     // if not found, add new contact
     const newData = { id: nanoid(5), ...data };
-    setContacts(prevState => [...prevState, newData]);
+
+    // setContacts(prevState => [...prevState, newData]); // old
+
+    // --- REDUX ---
+    dispatch(setContactsAction(newData));
+    // console.log('1::');
+    // console.log('2::');
+    // console.log('3::');
+
     toast.success('Successfully added!');
   };
 
   const changeFilter = evt => {
-    setFilter(evt.currentTarget.value);
+    // setFilter(evt.currentTarget.value);
+    // console.log('3::', evt.currentTarget.value);
+    dispatch(filterAction(evt.currentTarget.value));
   };
 
+  // const deleteContact = id => {
+  //   setContacts(prevState => prevState.filter(contact => contact.id !== id));
+  // };
+
+  // dispatch(setContactsAction(newData));
   const deleteContact = id => {
-    setContacts(prevState => prevState.filter(contact => contact.id !== id));
+    dispatch(delContactAction(id));
+    //   setContacts(prevState => prevState.filter(contact => contact.id !== id));
   };
 
   // contacts were updated!
@@ -54,7 +104,6 @@ function App() {
     // window.localStorage.setItem(LS_KEY, JSON.stringify(contacts));
     if (contacts.length === 0) {
       toast.error('Phonebook is empty!');
-      console.log('first render, Phonebook is empty!');
     }
   }, [contacts]);
 

@@ -4,10 +4,14 @@
 
 ## Used:
 
-- [React Router v6](https://reactrouter.com/docs/en/v6/api)
 - [React-toastify](https://fkhadra.github.io/react-toastify/introduction)
 - [styled-components](https://styled-components.com/docs)
 - [React hooks](https://ru.reactjs.org/docs/hooks-overview.html)
+
+- [Redux Toolkit](https://redux-toolkit.js.org/introduction/getting-started)
+- [Redux Persist](https://www.npmjs.com/package/redux-persist)
+
+#
 
 # React homework template
 
