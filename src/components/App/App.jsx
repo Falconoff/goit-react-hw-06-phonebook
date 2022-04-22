@@ -14,8 +14,12 @@ import Filter from '../Filter';
 //   filterAction,
 // } from '../../redux/store';
 
-import { setContactsAction, delContactAction } from '../../redux/contactsSlice';
-import { filterAction } from '../../redux/filterSlice';
+import {
+  setContactsAction,
+  delContactAction,
+  getContactsArr,
+} from '../../redux/contactsSlice';
+import { filterAction, getFilterValue } from '../../redux/filterSlice';
 
 import { Container, TitleMain, TitleSecond } from './App.styled';
 
@@ -35,20 +39,14 @@ function App() {
   // --- REDUX ---
   const dispatch = useDispatch();
 
-  // console.log(
-  //   'App state.contacts: ',
-  //   useSelector(state => state.contacts.items)
-  // );
-  // console.log(
-  //   'App state.filter: ',
-  //   useSelector(state => state.filter)
-  // );
+  // console.log('App state.contacts: ', useSelector(getContactsArr));
+  // console.log('App state.filter: ', useSelector(getFilterValue));
 
-  const contacts = useSelector(state => state.contacts.items);
-  // console.log('contacts', contacts);
+  const contacts = useSelector(getContactsArr);
+  console.log('contacts', contacts);
 
-  const filter = useSelector(state => state.contacts.filter);
-  // console.log('filter:', filter);
+  const filter = useSelector(getFilterValue);
+  console.log('filter:', filter);
 
   // =====================================================
 
@@ -75,8 +73,8 @@ function App() {
     // setContacts(prevState => [...prevState, newData]); // old
 
     // --- REDUX ---
+    console.log('newData::', newData);
     dispatch(setContactsAction(newData));
-    // console.log('1::');
     // console.log('2::');
     // console.log('3::');
 

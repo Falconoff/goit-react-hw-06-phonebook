@@ -28,6 +28,9 @@ export const store = configureStore({
   },
 });
 */
+
+// ========== without Local Storage =========
+/*
 import { combineReducers } from 'redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { contactsSlice } from './contactsSlice';
@@ -41,3 +44,54 @@ export const store = configureStore({
     }),
   },
 });
+*/
+// ===========================================
+// import { combineReducers } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
+// import { contactsSlice } from './contactsSlice';
+import { filterSlice } from './filterSlice';
+import {
+  persistStore,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'redux-persist';
+// import storage from 'redux-persist/lib/storage'; // localStorage
+
+import { persistedContactsReducer } from './contactsSlice';
+// const persistConfig = {
+//   key: 'phones',
+//   storage,
+// };
+
+// const persistedContactsReducer = persistReducer(
+//   persistConfig,
+//   contactsSlice.reducer
+// );
+
+// console.log('contactsSlice:', contactsSlice.getInitialState());
+
+export const store = configureStore({
+  reducer: {
+    contacts: persistedContactsReducer,
+    filter: filterSlice.reducer,
+
+    // contacts: combineReducers({
+    //   itemsss: persistedContactsReducer,
+    //   filter: filterSlice.reducer,
+    // }),
+  },
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
+});
+
+export const persistor = persistStore(store);
+
+// import rootReducer from './reducers';
