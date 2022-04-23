@@ -39,9 +39,6 @@ function App() {
   // --- REDUX ---
   const dispatch = useDispatch();
 
-  // console.log('App state.contacts: ', useSelector(getContactsArr));
-  // console.log('App state.filter: ', useSelector(getFilterValue));
-
   const contacts = useSelector(getContactsArr);
   console.log('contacts', contacts);
 

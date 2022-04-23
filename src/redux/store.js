@@ -46,11 +46,12 @@ export const store = configureStore({
 });
 */
 // ===========================================
-// import { combineReducers } from 'redux';
+import { combineReducers } from 'redux';
 import { configureStore } from '@reduxjs/toolkit';
-// import { contactsSlice } from './contactsSlice';
+import { contactsSlice } from './contactsSlice';
 import { filterSlice } from './filterSlice';
 import {
+  persistReducer,
   persistStore,
   FLUSH,
   REHYDRATE,
@@ -59,30 +60,32 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
-// import storage from 'redux-persist/lib/storage'; // localStorage
 
-import { persistedContactsReducer } from './contactsSlice';
-// const persistConfig = {
-//   key: 'phones',
-//   storage,
-// };
+import storage from 'redux-persist/lib/storage'; // localStorage
 
-// const persistedContactsReducer = persistReducer(
-//   persistConfig,
-//   contactsSlice.reducer
-// );
+// import { persistedContactsReducer } from './contactsSlice';
 
-// console.log('contactsSlice:', contactsSlice.getInitialState());
+const persistConfig = {
+  key: 'phones',
+  storage,
+};
+
+const persistedContactsReducer = persistReducer(
+  persistConfig,
+  contactsSlice.reducer
+);
+
+console.log('contactsSlice:', contactsSlice.getInitialState());
 
 export const store = configureStore({
   reducer: {
-    contacts: persistedContactsReducer,
-    filter: filterSlice.reducer,
+    // contacts: persistedContactsReducer,
+    // filter: filterSlice.reducer,
 
-    // contacts: combineReducers({
-    //   itemsss: persistedContactsReducer,
-    //   filter: filterSlice.reducer,
-    // }),
+    contacts: combineReducers({
+      items: persistedContactsReducer,
+      filter: filterSlice.reducer,
+    }),
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

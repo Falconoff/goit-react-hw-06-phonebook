@@ -1,14 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage'; // localStorage
+// import { persistReducer } from 'redux-persist';
+// import storage from 'redux-persist/lib/storage'; // localStorage
 
 // const initialState = [];
 
-const contactsSlice = createSlice({
+export const contactsSlice = createSlice({
   name: 'contacts',
-  initialState: { items: [] },
-  // initialState: [],
+  // initialState: { items: [{ name: 'John', number: 123 }] },
+  initialState: [],
   reducers: {
     setContactsAction: (state, action) => {
       console.log('action state:', state);
@@ -19,18 +19,19 @@ const contactsSlice = createSlice({
   },
 });
 
-const persistConfig = {
-  key: 'phones',
-  storage,
-};
+// const persistConfig = {
+//   key: 'phones',
+//   storage,
+// };
 
-export const persistedContactsReducer = persistReducer(
-  persistConfig,
-  contactsSlice.reducer
-);
+// export const persistedContactsReducer = persistReducer(
+//   persistConfig,
+//   contactsSlice.reducer
+// );
 
 export const { setContactsAction, delContactAction } = contactsSlice.actions;
 
 // SELECTORS
 
-export const getContactsArr = state => state.contacts.items;
+// export const getContactsArr = state => state.contacts.items;
+export const getContactsArr = state => state.contacts;
