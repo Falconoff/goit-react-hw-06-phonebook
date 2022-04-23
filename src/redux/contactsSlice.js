@@ -12,10 +12,10 @@ export const contactsSlice = createSlice({
   reducers: {
     setContactsAction: (state, action) => {
       console.log('action state:', state);
-      return [...state.contacts.items, action.payload];
+      return [...state, action.payload];
     },
     delContactAction: (state, action) =>
-      state.contacts.items.filter(contact => contact.id !== action.payload),
+      state.filter(contact => contact.id !== action.payload),
   },
 });
 
@@ -33,5 +33,5 @@ export const { setContactsAction, delContactAction } = contactsSlice.actions;
 
 // SELECTORS
 
-// export const getContactsArr = state => state.contacts.items;
-export const getContactsArr = state => state.contacts;
+export const getContactsArr = state => state.contacts.items;
+// export const getContactsArr = state => state.contacts;

@@ -46,6 +46,7 @@ export const store = configureStore({
 });
 */
 // ===========================================
+
 import { combineReducers } from 'redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { contactsSlice } from './contactsSlice';
@@ -79,7 +80,7 @@ console.log('contactsSlice:', contactsSlice.getInitialState());
 
 export const store = configureStore({
   reducer: {
-    // contacts: persistedContactsReducer,
+    //contacts: persistedContactsReducer,
     // filter: filterSlice.reducer,
 
     contacts: combineReducers({
